@@ -22,6 +22,7 @@ import System
 import System.File
 import Data.List
 import Data.String
+import Data.Maybe
 
 %default covering
 
@@ -57,7 +58,7 @@ parseArgs ("--verbose" :: rest) opts = parseArgs rest ({ verbose := True } opts)
 parseArgs ("--disassemble" :: rest) opts = parseArgs rest ({ disassemble := True } opts)
 parseArgs ("-d" :: rest) opts = parseArgs rest ({ disassemble := True } opts)
 parseArgs ("--gas" :: g :: rest) opts =
-  let gas = fromMaybe 1000000 (parsePositive g)
+  let gas = fromMaybe 1000000 (parsePositive {a=Nat} g)
   in parseArgs rest ({ gasLimit := gas } opts)
 parseArgs ("--calldata" :: cd :: rest) opts =
   parseArgs rest ({ calldataHex := cd } opts)
