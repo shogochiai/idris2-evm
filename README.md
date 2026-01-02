@@ -94,13 +94,29 @@ src/
 
 ## Coverage Collection
 
-To collect coverage data, rebuild with `--coverage`:
+### Interpreter Branch Coverage
+
+To collect interpreter branch coverage (which EVM opcodes were executed), rebuild with `--coverage`:
 
 ```bash
 idris2 --cg chez --coverage src/Main.idr -o idris2-evm-run
 ```
 
-Then run the interpreter. The Chez `.ssi` files will contain hit counts for each branch in the interpreter, reflecting which EVM opcodes were executed.
+The Chez `.ssi` files will contain hit counts for each branch in the interpreter.
+
+### Function-Level Coverage (with idris2-yul)
+
+For Idris2 function-level coverage of compiled contracts, use with `idris2-evm-coverage`:
+
+```
+Idris2 Source → idris2-yul (@source comments) → EVM bytecode
+                                                      ↓
+                           idris2-evm-coverage ← EVM trace (hit PCs)
+                                   ↓
+                         Idris2 Function Coverage Report
+```
+
+See [idris2-evm-coverage](https://github.com/shogochiai/idris2-evm-coverage) for details.
 
 ## Development
 
